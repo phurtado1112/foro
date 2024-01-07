@@ -6,7 +6,7 @@
         <ul>
             @foreach ($categories as $category)
             <li class="mb-2">
-                <a href="" class="p-2 rounded-md flex bg-slate-800 items-center gap-2 text-white/60 hover:text-white font-semibold text-xs capitalized">
+                <a href="#" wire:click.prevent="filterByCategory('{{ $category->id }}')" class="p-2 rounded-md flex bg-slate-800 items-center gap-2 text-white/60 hover:text-white font-semibold text-xs capitalized">
                     <span class="w-2 h-2 rounded-full" style="background-color: {{ $category->color }};"></span>
                     {{ $category->name }}
                 </a>
@@ -14,7 +14,7 @@
             @endforeach
 
             <li>
-                <a href="" class="p-2 rounded-md flex bg-slate-800 items-center gap-2 text-white/60 hover:text-white font-semibold text-xs capitalized">
+                <a href="#" wire:click.prevent="filterByCategory('')" class="p-2 rounded-md flex bg-slate-800 items-center gap-2 text-white/60 hover:text-white font-semibold text-xs capitalized">
                     <span class="w-2 h-2 rounded-full" style="background-color: #000;"></span>
                     Todos los resultados
                 </a>
@@ -22,6 +22,14 @@
         </ul>
     </div>
     <div class="w-full">
+        <form class="mb-4">
+            <input
+                type="text"
+                placeholder="// ..."
+                class="bg-slate-800 border-0 rounded-md w-1/3 p-3 text-white/60 text-xs"
+                wire:model.live="search"
+            >
+        </form>
         @foreach ($threads as $thread)
             <div class="rounded-md bg-gradient-to-r from-slate-800 to-slate-900 hover:to-slate-800 mb-4">
                 <div class="p-4 flex gap-4">
@@ -30,7 +38,7 @@
                     </div>
                     <div class="w-full">
                         <h2 class="mb-4 flex items-start justify-between">
-                            <a href="" class="text-xl font-semibold text-white/90">{{ $thread->title }}</a>
+                            <a href="{{ route('thread', $thread) }}" class="text-xl font-semibold text-white/90">{{ $thread->title }}</a>
                             <span class="rounded-full text-xs py-2 px-4 capitalize" style="color:{{ $thread->category->color }}; border: 1px solid {{ $thread->category->color }};">
                                 {{ $thread->category->name }}
                             </span>
